@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Selection from './components/Selection';
 
 function App() {
+  const [numOfPlayers, setNumOfPlayers] = useState()
+  const [numOfGames, setNumOfGames] = useState()
+
+  const handlePlayerSelect = (event) => {
+    setNumOfPlayers(event.target.value)
+  }
+
+  const handleGamesSelect = (event) => {
+    setNumOfGames(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log(`you submited ${numOfPlayers} players and ${numOfGames} games`)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Selection
+        handleSubmit={handleSubmit}
+        handlePlayerSelect={handlePlayerSelect}
+        handleGamesSelect={handleGamesSelect}
+      />
     </div>
   );
 }
