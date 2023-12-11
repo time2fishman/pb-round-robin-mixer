@@ -47,10 +47,10 @@ const Selection = ({ handlePlayerSelect, handleGamesSelect, handleCourtSelect, h
             <option value={8}>8</option>
             <option value={9}>9</option>
           </select>
-          <br></br>
-          <input className='mt3 pa1' type='submit' value='Submit' />
-          {errorMessage && (<p className="red">{errorMessage}</p>)}
         </label>
+        <br></br>
+          <input className='mt3 pa1' type='submit' value='Submit' />
+          {errorMessage && (<p className='red'>{errorMessage}</p>)}
       </form>
     </>
   );

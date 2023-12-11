@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Selection from './components/Selection';
+import Results from './components/Results';
 
 function App() {
   const [numOfPlayers, setNumOfPlayers] = useState()
@@ -22,25 +24,33 @@ function App() {
     setErrorMessage('')
   }
 
+  const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault()
     // validation
-    if (5 * numOfCourts < numOfPlayers) {
+    if ((numOfCourts * 5) < numOfPlayers) {
       setErrorMessage('This configuration leaves too many people sitting. Only 1 bye per court is allowed.')
+    } else if ((numOfCourts * 4) > numOfPlayers) {
+      setErrorMessage('There are not enough players to fill the selected amount of courts.')
+    } else {
+      navigate('/results')
     }
 
-    console.log(`you submited ${numOfPlayers} players, ${numOfCourts} of courts, and ${numOfGames} games`)
+    console.log(`you submited ${numOfPlayers} players, ${numOfCourts} courts, and ${numOfGames} games`)
   }
 
   return (
     <div className="App">
-      <Selection
-        handleSubmit={handleSubmit}
-        handlePlayerSelect={handlePlayerSelect}
-        handleGamesSelect={handleGamesSelect}
-        handleCourtSelect={handleCourtSelect}
-        errorMessage={errorMessage}
-      />
+      <Routes>
+        <Route path="/" element={<Selection
+          handleSubmit={handleSubmit}
+          handlePlayerSelect={handlePlayerSelect}
+          handleGamesSelect={handleGamesSelect}
+          handleCourtSelect={handleCourtSelect}
+          errorMessage={errorMessage}
+        />} />
+        <Route path="results" element={<Results handleSubmit={handleSubmit} />} />
+      </Routes>
     </div>
   );
 }
